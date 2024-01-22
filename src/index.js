@@ -3,6 +3,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Home from "./screens/Home";
 import ShowManga from "./screens/ShowManga";
+import SearchManga from "./screens/SearchManga";
 
 const Stack = createNativeStackNavigator();
 
@@ -17,6 +18,10 @@ export default function RootNavigation() {
                         headerShown: false 
                     }}>                        
                     </Stack.Screen>
+                <Stack.Screen 
+                    name="ShowManga"
+                    component={ShowManga}
+                />
             </Stack.Navigator>
         </NavigationContainer>
     )
@@ -35,12 +40,12 @@ function TabsNavigation(){
                 }}
                 />
             <Tabs.Screen 
-                name="ShowManga" 
-                component={ShowManga} 
+                name='Busca'
+                component={SearchManga}
                 options={{
-                    tabBarLabel: "Manga",
+                    tabBarLabel: 'Buscar Mangá'
                 }}
-                />
+            />
         </Tabs.Navigator>
     )
 }
