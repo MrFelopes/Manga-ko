@@ -44,7 +44,7 @@ export default function ShowManga(){
     }
     
     return (
-        <View style={styles.container}>
+        <View>
             <Text>Teste de visualização</Text>
             <Button onPress={ReceberCapitulos}>Poggggggg</Button>
             <Button onPress={butao}>anata ni take</Button>

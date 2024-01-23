@@ -4,14 +4,18 @@ import { styles } from '../utils/styles';
 
 export default function Home({ navigation }) {
   return (
-    <View style={styles.container}>
-      <Text>Bem-Vindo(a) ao projeto de app para o MangaDex</Text>
-      <Button
-        mode="contained"
-        onPress={() => navigation.navigate('ShowManga')}
-      >
-        Teste
-      </Button>
+    <View style={styles.fullBody}>
+        <View style={styles.container}>
+        <Text style={styles.textBigBold}>Bem-Vindo(a) ao projeto de app para o MangaDex</Text>
+        <Button
+          mode="contained"
+          onPress={() => navigation.navigate('ShowManga')}
+          style={styles.button}
+        >
+          Teste
+        </Button>
+      </View>
     </View>
+  
   );
 }
