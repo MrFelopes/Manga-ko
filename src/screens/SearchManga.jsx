@@ -2,13 +2,14 @@ import React, { useEffect, useState } from "react";
 import { View, FlatList, Text, Image, TextInput, Dimensions } from "react-native";
 import axios from "axios";
 import { styles } from "../utils/styles";
+import { useWindowDimensions } from "react-native";
 
 export default function SearchManga() {
   const [title, setTitle] = useState('');
   const URLpadrao = 'https://api.mangadex.org';
   const [manga, setManga] = useState([]);
   const [mangaImgs, setMangaImgs] = useState([]);
-  const windowDimensions = Dimensions.get('window');
+  const {width, height} = useWindowDimensions();
 
   useEffect(() => {
     if (!title) return;
@@ -45,12 +46,16 @@ export default function SearchManga() {
     getManga();
   }, [title]);
 
+  const flatlistColumnStyle = 
+    width >= 600
+      ? { columnWrapperStyle: {flex: 1, justifyContent: 'space-around', minWidth: width} }
+      : {};
+
   return (
     <View style={styles.fullBody}>
       <Text style={styles.textBigBold}>Lista de Mangás:</Text>
       <FlatList
         style={styles.flatlistM}
-        columnWrapperStyle={{ flex: 1, justifyContent: 'space-around'}}
         data={manga}
         keyExtractor={(item) => item.id}
         renderItem={({ item, index }) => (
@@ -66,8 +71,9 @@ export default function SearchManga() {
             )}
           </View>
         )}
-        numColumns={2}
-        key={windowDimensions.width >= 600 ? 2 : 1}
+        {...flatlistColumnStyle}
+        numColumns={width >= 600 ? 2 : 1}
+        key={width >= 600 ? 2 : 1}
       />
       <TextInput
         label="Digite o título do mangá"

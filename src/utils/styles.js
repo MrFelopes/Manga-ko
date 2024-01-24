@@ -1,6 +1,6 @@
 import { StyleSheet, useWindowDimensions } from 'react-native';
 
-const { width } = () => useWindowDimensions();
+const { width } = () => useWindowDimensions().width;
 
   export const styles = StyleSheet.create({
       fullBody: {
@@ -79,4 +79,4 @@ const { width } = () => useWindowDimensions();
           minWidth: width,
       },
 
-  })
+  }) 
