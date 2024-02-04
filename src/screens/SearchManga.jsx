@@ -6,7 +6,6 @@ import { styles } from "../utils/styles";
 import { useWindowDimensions } from "react-native";
 
 export default function SearchManga() {
-
   const [title, setTitle] = useState('');
   const baseURL = 'https://api.mangadex.org';
   const [manga, setManga] = useState([]);
@@ -40,20 +39,11 @@ export default function SearchManga() {
                   }
                 } catch (error) {
                   console.error("Error fetching data:", error);
-                attempts++;
+                  attempts++;
+                }
               }
-            }
-            switch (error.response.status) {
-              case 404:
-                setDialogError('One or more of the cover images could not be found. Retype the title to try again.');
-                setVisible(true);
-                break;
-              default:
-                setDialogError('An error occurred while fetching the data. Please try again later.');
-                setVisible(true);
-                break;
-            
-            }
+              setDialogError('An error occurred while fetching some cover images. Retype the title to try again.');
+              setVisible(true);
               return null;
             })
           );
@@ -80,21 +70,11 @@ export default function SearchManga() {
         }
       } catch (error) {
         console.error("Error retrieving data from Mangadex:", error);
-        switch (error.response.status) {
-          case 404:
-            setDialogError('One or more of the cover images could not be found. Retype the title to try again.');
-            setVisible(true);
-            break;
-
-          default:
-            setDialogError('An error occurred while fetching the data. Please try again later.');
-            setVisible(true);
-            break;
-        }
+        setDialogError('An error occurred while fetching data from Mangadex. Retype the title to try again.');
+        setVisible(true);
       }
     };
     getManga();
-    
   }, [title]);
 
   return (
@@ -114,7 +94,7 @@ export default function SearchManga() {
               <Text>{dialogError}</Text>
             </Dialog.Content>
             <Dialog.Actions>
-              <Button onPress={() => setVisible(false)} title="Close"/>
+              <Button onPress={() => setVisible(false)} title="Close" />
             </Dialog.Actions>
           </Dialog>
         </Portal>
