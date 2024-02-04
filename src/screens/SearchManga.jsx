@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { View, FlatList, Text, Image, TextInput, Dimensions, Button } from "react-native";
-import { Dialog, Portal, PaperProvider } from "react-native-paper";
+import { View, FlatList, Text, Image, TextInput, Dimensions } from "react-native";
+import { Dialog, Portal, PaperProvider, TouchableOpacity } from "react-native-paper";
 import axios from "axios";
 import { styles } from "../utils/styles";
 import { useWindowDimensions } from "react-native";
@@ -11,16 +11,17 @@ export default function SearchManga() {
   const [manga, setManga] = useState([]);
   const [mangaImgs, setMangaImgs] = useState([]);
   const { width, height } = useWindowDimensions();
-  const [updateImage, setUpdateImage] = useState(0);
   const defaultCharacter = 'A';
   const [visible, setVisible] = useState(false);
   const [dialogError, setDialogError] = useState('An unknown error occurred.');
 
   useEffect(() => {
+
     const getManga = async () => {
       try {
         if (title.length < 1) {
-          const resposta = await axios.get(`${baseURL}/manga?title=${defaultCharacter}`);
+          
+          const resposta = await axios.get(`${baseURL}/manga?title=${defaultCharacter}&contentRating[]=suggestive&contentRating[]=safe`);
           setManga(resposta.data.data);
 
           const coverIds = resposta.data.data.map((manga) =>
@@ -94,7 +95,7 @@ export default function SearchManga() {
               <Text>{dialogError}</Text>
             </Dialog.Content>
             <Dialog.Actions>
-              <Button onPress={() => setVisible(false)} title="Close" />
+              <TouchableOpacity onPress={() => setVisible(false)}><Text>teste</Text></TouchableOpacity>
             </Dialog.Actions>
           </Dialog>
         </Portal>
@@ -125,7 +126,6 @@ export default function SearchManga() {
           numColumns={1}
           key={width >= 600 ? 2 : 1}
         />
-        <Button onPress={() => setVisible(true)}>Teste</Button>
       </View>
     </PaperProvider>
   );

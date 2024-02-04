@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { View } from 'react-native';
-import { Button, Text } from 'react-native-paper';
+import { Text } from 'react-native-paper';
 import { styles } from '../utils/styles';
+import * as React from "react";
 
 export default function ShowManga(){
 
@@ -46,9 +47,6 @@ export default function ShowManga(){
     return (
         <View>
             <Text>Teste de visualização</Text>
-            <Button onPress={ReceberCapitulos}>Poggggggg</Button>
-            <Button onPress={butao}>anata ni take</Button>
-            <Button onPress={DownloadCapitulos}>Download</Button>
         </View>
     );
 };
