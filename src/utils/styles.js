@@ -1,9 +1,10 @@
-import { StyleSheet} from 'react-native';
+import { StyleSheet, useWindowDimensions, Platform} from 'react-native';
 import { Dimensions } from 'react-native'
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
+const window = () => useWindowDimensions();
 
 
     export const styles = StyleSheet.create({
@@ -13,7 +14,11 @@ const windowHeight = Dimensions.get('window').height;
             alignItems: 'center',
             justifyContent: 'center',
             minHeight: '100%',
-            width: windowWidth,
+            height: Platform.select({
+                ios: windowHeight,
+                android: windowHeight,
+                web: window.height,
+            }),
             backgroundColor: '#514E57',
         },
         container: {
@@ -25,7 +30,11 @@ const windowHeight = Dimensions.get('window').height;
             alignItems: 'center',
             justifyContent: 'center',
             maxWidth: 300,
-            height: windowHeight * 0.5,
+            height: Platform.select({
+                ios: windowHeight * 0.5,
+                android: windowHeight * 0.5,
+                web: window.height * 0.8,
+            }),
             borderRadius: 10,
             margin: 10,
         },
@@ -90,6 +99,10 @@ const windowHeight = Dimensions.get('window').height;
             margin: 10,
         },
         flatlistM: {
-            minWidth: windowWidth,
+            minWidth: Platform.select({
+                ios: windowWidth,
+                android: windowWidth,
+                web: window.width,
+            }),
         },
     });

@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { View, FlatList, Text, Image, TextInput, Dimensions } from "react-native";
+import { useEffect, useState } from "react";
+import { View, FlatList, Text, Image, TextInput } from "react-native";
 import { Dialog, Portal, PaperProvider, TouchableOpacity } from "react-native-paper";
 import axios from "axios";
 import { styles } from "../utils/styles";
@@ -118,6 +118,7 @@ export default function SearchManga() {
                       style={styles.mangaImgs}
                       source={{ uri: `https://uploads.mangadex.org/covers/${item.id}/${mangaImgs[index]}` }}
                     />
+                    
                   </View>
                 )}
               </View>
