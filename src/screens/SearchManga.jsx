@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { View, FlatList, Text, Image, TextInput } from "react-native";
-import { Dialog, Portal, PaperProvider, TouchableOpacity } from "react-native-paper";
+import { View, FlatList, Text, Image, TextInput} from "react-native";
+import { Dialog, Portal, PaperProvider, Button } from "react-native-paper";
 import axios from "axios";
 import { styles } from "../utils/styles";
 import { useWindowDimensions } from "react-native";
@@ -23,6 +23,7 @@ export default function SearchManga() {
           
           const resposta = await axios.get(`${baseURL}/manga?title=${defaultCharacter}&contentRating[]=suggestive&contentRating[]=safe`);
           setManga(resposta.data.data);
+          console.log(resposta.data.data)
 
           const coverIds = resposta.data.data.map((manga) =>
             manga.relationships.find((rel) => rel.type === 'cover_art')?.id
@@ -35,7 +36,6 @@ export default function SearchManga() {
                 try {
                   if (coverId) {
                     const coverRes = await axios.get(`${baseURL}/cover/${coverId}`);
-                    console.log("DEBUG: ", coverRes.data.data)
                     return coverRes.data.data.attributes.fileName;
                   }
                 } catch (error) {
@@ -49,7 +49,6 @@ export default function SearchManga() {
             })
           );
           setMangaImgs(imgResponses);
-          console.log(imgResponses);
         } else {
           const resposta = await axios.get(`${baseURL}/manga?title=${title}`);
           setManga(resposta.data.data);
@@ -95,7 +94,7 @@ export default function SearchManga() {
               <Text>{dialogError}</Text>
             </Dialog.Content>
             <Dialog.Actions>
-              <TouchableOpacity onPress={() => setVisible(false)}><Text>teste</Text></TouchableOpacity>
+              <Button onPress={() => setVisible(false)}><Text>teste</Text></Button>
             </Dialog.Actions>
           </Dialog>
         </Portal>
@@ -111,6 +110,15 @@ export default function SearchManga() {
                 ) : (
                   <Text style={styles.textSmallBold}>{item.attributes.title.ja}</Text>
                 )}
+                
+                {item.attributes.contentRating === "suggestive" && 
+                  <Text style={{... styles.textSmallBold, marginTop: 0, color: "yellow"}}>Suggestive!</Text>
+                }
+                
+                {item.attributes.contentRating === "erotica" && 
+                  <Text style ={{ ... styles.textSmallBold, color: "red", marginTop: 0 }}>Erotica!</Text>
+                }
+
                 <Text style={styles.textSmall}>Status: {item.attributes.status}</Text>
                 {mangaImgs[index] && (
                   <View style={styles.mangaView}>
@@ -118,7 +126,6 @@ export default function SearchManga() {
                       style={styles.mangaImgs}
                       source={{ uri: `https://uploads.mangadex.org/covers/${item.id}/${mangaImgs[index]}` }}
                     />
-                    
                   </View>
                 )}
               </View>

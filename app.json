@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "MangaDex_App",
-    "slug": "MangaDex_App",
+    "name": "Manga-ko",
+    "slug": "Manga-ko",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
