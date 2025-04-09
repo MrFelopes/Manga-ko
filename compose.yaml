@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  react-native-app:
+    build:
+      context: .
+    volumes:
+      - .:/app
+      - /app/node_modules
+    ports:
+      - "19000:19000"
+      - "19001:19001"   # Porta para debugging
+      - "19002:19002"   
+    stdin_open: true
+    tty: true
